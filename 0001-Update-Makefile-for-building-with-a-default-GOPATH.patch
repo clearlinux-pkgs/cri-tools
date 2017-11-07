@@ -1,4 +1,4 @@
-From 4b30021ef8a1108638e1a7dd8e3f15a070e7545d Mon Sep 17 00:00:00 2001
+From 55c984960f80e6a62d8e11195fb772f37b9b6985 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Tue, 7 Nov 2017 18:33:52 +0000
 Subject: [PATCH] Update Makefile for building with a default GOPATH
@@ -7,11 +7,11 @@ Using the template from cri-o, update the Makefile to provide a
 default GOPATH and create the structure to allow that GOPATH to build
 successfully.
 ---
- Makefile | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ Makefile | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 4869882..7476be8 100644
+index 4869882..a21625b 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -15,8 +15,15 @@
@@ -41,14 +41,6 @@ index 4869882..7476be8 100644
  ifndef GOPATH
  	$(error GOPATH is not set)
  endif
-@@ -47,6 +58,7 @@ clean:
- binaries: critest crictl
- 
- install: check-gopath
-+	mkdir -p $(BINDIR)
- 	install -D -m 755 $(GOBINDIR)/bin/critest $(BINDIR)/critest
- 	install -D -m 755 $(GOBINDIR)/bin/crictl $(BINDIR)/crictl
- 
 -- 
 2.15.0
 
