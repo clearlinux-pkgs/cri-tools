@@ -4,7 +4,7 @@
 #
 Name     : cri-tools
 Version  : 1.11.1
-Release  : 5
+Release  : 6
 URL      : https://github.com/kubernetes-incubator/cri-tools/archive/v1.11.1.tar.gz
 Source0  : https://github.com/kubernetes-incubator/cri-tools/archive/v1.11.1.tar.gz
 Summary  : No detailed summary available
@@ -12,7 +12,8 @@ Group    : Development/Tools
 License  : Apache-2.0 BSD-3-Clause CC-BY-SA-4.0 MIT
 Requires: cri-tools-bin
 Requires: cri-tools-license
-BuildRequires : go
+BuildRequires : buildreq-golang
+Patch1: 0002-define-crio.sock-as-default-socket.patch
 
 %description
 This repository provides supplementary Go time packages.
@@ -20,7 +21,7 @@ This repository provides supplementary Go time packages.
 %package bin
 Summary: bin components for the cri-tools package.
 Group: Binaries
-Requires: cri-tools-license
+Requires: cri-tools-license = %{version}-%{release}
 
 %description bin
 bin components for the cri-tools package.
@@ -44,61 +45,62 @@ license components for the cri-tools package.
 
 %prep
 %setup -q -n cri-tools-1.11.1
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1531747374
+export SOURCE_DATE_EPOCH=1537410867
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1531747374
+export SOURCE_DATE_EPOCH=1537410867
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/cri-tools
 cp LICENSE %{buildroot}/usr/share/doc/cri-tools/LICENSE
-cp vendor/k8s.io/utils/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_k8s.io_utils_LICENSE
-cp vendor/k8s.io/kubernetes/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_k8s.io_kubernetes_LICENSE
-cp vendor/k8s.io/client-go/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_k8s.io_client-go_LICENSE
-cp vendor/k8s.io/apimachinery/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_k8s.io_apimachinery_LICENSE
-cp vendor/k8s.io/api/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_k8s.io_api_LICENSE
-cp vendor/gopkg.in/yaml.v2/LICENSE.libyaml %{buildroot}/usr/share/doc/cri-tools/vendor_gopkg.in_yaml.v2_LICENSE.libyaml
-cp vendor/gopkg.in/yaml.v2/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_gopkg.in_yaml.v2_LICENSE
-cp vendor/gopkg.in/inf.v0/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_gopkg.in_inf.v0_LICENSE
-cp vendor/google.golang.org/grpc/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_google.golang.org_grpc_LICENSE
-cp vendor/google.golang.org/genproto/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_google.golang.org_genproto_LICENSE
-cp vendor/golang.org/x/time/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_golang.org_x_time_LICENSE
-cp vendor/golang.org/x/text/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_golang.org_x_text_LICENSE
-cp vendor/golang.org/x/sys/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_golang.org_x_sys_LICENSE
-cp vendor/golang.org/x/net/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_golang.org_x_net_LICENSE
-cp vendor/golang.org/x/crypto/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_golang.org_x_crypto_LICENSE
-cp vendor/github.com/urfave/cli/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_urfave_cli_LICENSE
-cp vendor/github.com/sirupsen/logrus/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_sirupsen_logrus_LICENSE
-cp vendor/github.com/pborman/uuid/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_pborman_uuid_LICENSE
-cp vendor/github.com/opencontainers/selinux/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_opencontainers_selinux_LICENSE
+cp hack/repo-infra/LICENSE %{buildroot}/usr/share/doc/cri-tools/hack_repo-infra_LICENSE
+cp vendor/github.com/Azure/go-ansiterm/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_Azure_go-ansiterm_LICENSE
+cp vendor/github.com/docker/docker/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_docker_docker_LICENSE
+cp vendor/github.com/docker/docker/NOTICE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_docker_docker_NOTICE
+cp vendor/github.com/docker/go-units/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_docker_go-units_LICENSE
+cp vendor/github.com/docker/spdystream/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_docker_spdystream_LICENSE
+cp vendor/github.com/docker/spdystream/LICENSE.docs %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_docker_spdystream_LICENSE.docs
+cp vendor/github.com/fsnotify/fsnotify/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_fsnotify_fsnotify_LICENSE
+cp vendor/github.com/ghodss/yaml/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_ghodss_yaml_LICENSE
+cp vendor/github.com/gogo/protobuf/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_gogo_protobuf_LICENSE
+cp vendor/github.com/golang/glog/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_golang_glog_LICENSE
+cp vendor/github.com/golang/protobuf/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_golang_protobuf_LICENSE
+cp vendor/github.com/google/gofuzz/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_google_gofuzz_LICENSE
+cp vendor/github.com/json-iterator/go/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_json-iterator_go_LICENSE
+cp vendor/github.com/mitchellh/go-wordwrap/LICENSE.md %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_mitchellh_go-wordwrap_LICENSE.md
+cp vendor/github.com/modern-go/concurrent/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_modern-go_concurrent_LICENSE
+cp vendor/github.com/modern-go/reflect2/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_modern-go_reflect2_LICENSE
+cp vendor/github.com/onsi/ginkgo/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_onsi_ginkgo_LICENSE
+cp vendor/github.com/onsi/ginkgo/reporters/stenographer/support/go-colorable/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_onsi_ginkgo_reporters_stenographer_support_go-colorable_LICENSE
+cp vendor/github.com/onsi/ginkgo/reporters/stenographer/support/go-isatty/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_onsi_ginkgo_reporters_stenographer_support_go-isatty_LICENSE
 cp vendor/github.com/onsi/gomega/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_onsi_gomega_LICENSE
 cp vendor/github.com/onsi/gomega/matchers/support/goraph/MIT.LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_onsi_gomega_matchers_support_goraph_MIT.LICENSE
-cp vendor/github.com/onsi/ginkgo/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_onsi_ginkgo_LICENSE
-cp vendor/github.com/onsi/ginkgo/reporters/stenographer/support/go-isatty/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_onsi_ginkgo_reporters_stenographer_support_go-isatty_LICENSE
-cp vendor/github.com/onsi/ginkgo/reporters/stenographer/support/go-colorable/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_onsi_ginkgo_reporters_stenographer_support_go-colorable_LICENSE
-cp vendor/github.com/modern-go/reflect2/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_modern-go_reflect2_LICENSE
-cp vendor/github.com/modern-go/concurrent/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_modern-go_concurrent_LICENSE
-cp vendor/github.com/mitchellh/go-wordwrap/LICENSE.md %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_mitchellh_go-wordwrap_LICENSE.md
-cp vendor/github.com/json-iterator/go/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_json-iterator_go_LICENSE
-cp vendor/github.com/google/gofuzz/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_google_gofuzz_LICENSE
-cp vendor/github.com/golang/protobuf/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_golang_protobuf_LICENSE
-cp vendor/github.com/golang/glog/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_golang_glog_LICENSE
-cp vendor/github.com/gogo/protobuf/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_gogo_protobuf_LICENSE
-cp vendor/github.com/ghodss/yaml/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_ghodss_yaml_LICENSE
-cp vendor/github.com/fsnotify/fsnotify/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_fsnotify_fsnotify_LICENSE
-cp vendor/github.com/docker/spdystream/LICENSE.docs %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_docker_spdystream_LICENSE.docs
-cp vendor/github.com/docker/spdystream/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_docker_spdystream_LICENSE
-cp vendor/github.com/docker/go-units/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_docker_go-units_LICENSE
-cp vendor/github.com/docker/docker/NOTICE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_docker_docker_NOTICE
-cp vendor/github.com/docker/docker/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_docker_docker_LICENSE
-cp vendor/github.com/Azure/go-ansiterm/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_Azure_go-ansiterm_LICENSE
-cp hack/repo-infra/LICENSE %{buildroot}/usr/share/doc/cri-tools/hack_repo-infra_LICENSE
+cp vendor/github.com/opencontainers/selinux/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_opencontainers_selinux_LICENSE
+cp vendor/github.com/pborman/uuid/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_pborman_uuid_LICENSE
+cp vendor/github.com/sirupsen/logrus/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_sirupsen_logrus_LICENSE
+cp vendor/github.com/urfave/cli/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_github.com_urfave_cli_LICENSE
+cp vendor/golang.org/x/crypto/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_golang.org_x_crypto_LICENSE
+cp vendor/golang.org/x/net/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_golang.org_x_net_LICENSE
+cp vendor/golang.org/x/sys/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_golang.org_x_sys_LICENSE
+cp vendor/golang.org/x/text/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_golang.org_x_text_LICENSE
+cp vendor/golang.org/x/time/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_golang.org_x_time_LICENSE
+cp vendor/google.golang.org/genproto/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_google.golang.org_genproto_LICENSE
+cp vendor/google.golang.org/grpc/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_google.golang.org_grpc_LICENSE
+cp vendor/gopkg.in/inf.v0/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_gopkg.in_inf.v0_LICENSE
+cp vendor/gopkg.in/yaml.v2/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_gopkg.in_yaml.v2_LICENSE
+cp vendor/gopkg.in/yaml.v2/LICENSE.libyaml %{buildroot}/usr/share/doc/cri-tools/vendor_gopkg.in_yaml.v2_LICENSE.libyaml
+cp vendor/k8s.io/api/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_k8s.io_api_LICENSE
+cp vendor/k8s.io/apimachinery/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_k8s.io_apimachinery_LICENSE
+cp vendor/k8s.io/client-go/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_k8s.io_client-go_LICENSE
+cp vendor/k8s.io/kubernetes/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_k8s.io_kubernetes_LICENSE
+cp vendor/k8s.io/utils/LICENSE %{buildroot}/usr/share/doc/cri-tools/vendor_k8s.io_utils_LICENSE
 %make_install BINDIR=%{buildroot}/usr/bin
 
 %files
