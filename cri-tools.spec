@@ -4,7 +4,7 @@
 #
 Name     : cri-tools
 Version  : 1.18.0
-Release  : 17
+Release  : 18
 URL      : https://github.com/kubernetes-sigs/cri-tools/archive/v1.18.0.tar.gz
 Source0  : https://github.com/kubernetes-sigs/cri-tools/archive/v1.18.0.tar.gz
 Summary  : No detailed summary available
@@ -13,7 +13,8 @@ License  : Apache-2.0 BSD-2-Clause BSD-3-Clause CC-BY-SA-4.0 ISC MIT
 Requires: cri-tools-bin = %{version}-%{release}
 Requires: cri-tools-license = %{version}-%{release}
 BuildRequires : buildreq-golang
-Patch1: 0002-Define-crio.sock-as-default-socket.patch
+Patch1: 0001-main_unix-Define-crio.sock-as-default-socket.patch
+Patch2: 0002-Enable-static-pie-linkage-for-binaries.patch
 
 %description
 This is a work-in-progress HTTP/2 implementation for Go.
@@ -41,13 +42,14 @@ license components for the cri-tools package.
 %setup -q -n cri-tools-1.18.0
 cd %{_builddir}/cri-tools-1.18.0
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1588182557
+export SOURCE_DATE_EPOCH=1595439982
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -57,7 +59,7 @@ make  %{?_smp_mflags}  V=1 VERSION=%{version}
 
 
 %install
-export SOURCE_DATE_EPOCH=1588182557
+export SOURCE_DATE_EPOCH=1595439982
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-tools
 cp %{_builddir}/cri-tools-1.18.0/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/92170cdc034b2ff819323ff670d3b7266c8bffcd

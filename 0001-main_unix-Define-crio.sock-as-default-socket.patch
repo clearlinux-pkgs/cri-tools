@@ -1,4 +1,4 @@
-From 0f11baf010b3fb047500227e52134102c6f71f50 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jose Lamego <jose.a.lamego@intel.com>
 Date: Tue, 9 Oct 2018 16:53:46 -0500
 Subject: [PATCH] main_unix: Define crio.sock as default socket
@@ -12,18 +12,13 @@ Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/cmd/crictl/main_unix.go b/cmd/crictl/main_unix.go
-index c670da9..5b0560f 100644
+index 3c957d1..c656e75 100644
 --- a/cmd/crictl/main_unix.go
 +++ b/cmd/crictl/main_unix.go
-@@ -27,7 +27,7 @@ import (
+@@ -20,5 +20,5 @@ package main
  
  const (
  	defaultConfigPath      = "/etc/crictl.yaml"
 -	defaultRuntimeEndpoint = "unix:///var/run/dockershim.sock"
 +	defaultRuntimeEndpoint = "unix:///run/crio/crio.sock"
  )
- 
- // GetAddressAndDialer returns the address and a dialer for the endpoint
--- 
-2.19.1
-

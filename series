@@ -1,1 +1,2 @@
-0002-Define-crio.sock-as-default-socket.patch
+0001-main_unix-Define-crio.sock-as-default-socket.patch
+0002-Enable-static-pie-linkage-for-binaries.patch
