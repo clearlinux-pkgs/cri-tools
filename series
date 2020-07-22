@@ -1,2 +1,1 @@
-#0001-Update-Makefile-for-building-with-a-default-GOPATH.patch
 0002-Define-crio.sock-as-default-socket.patch
