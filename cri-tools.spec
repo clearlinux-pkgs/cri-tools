@@ -4,7 +4,7 @@
 #
 Name     : cri-tools
 Version  : 1.18.0
-Release  : 20
+Release  : 21
 URL      : https://github.com/kubernetes-sigs/cri-tools/archive/v1.18.0.tar.gz
 Source0  : https://github.com/kubernetes-sigs/cri-tools/archive/v1.18.0.tar.gz
 Summary  : No detailed summary available
@@ -49,7 +49,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1595439982
+export SOURCE_DATE_EPOCH=1605146463
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -59,7 +59,7 @@ make  %{?_smp_mflags}  V=1 VERSION=%{version}
 
 
 %install
-export SOURCE_DATE_EPOCH=1595439982
+export SOURCE_DATE_EPOCH=1605146463
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-tools
 cp %{_builddir}/cri-tools-1.18.0/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/92170cdc034b2ff819323ff670d3b7266c8bffcd

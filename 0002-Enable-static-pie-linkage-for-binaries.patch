@@ -9,7 +9,7 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 2dfffae..b1e3374 100644
+index 2dfffae..b1a14b5 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -16,8 +16,8 @@ GO ?= go
@@ -28,7 +28,7 @@ index 2dfffae..b1e3374 100644
  VERSION := $(shell git describe --tags --dirty --always)
  VERSION := $(VERSION:v%=%)
 -GO_LDFLAGS := -X $(PROJECT)/pkg/version.Version=$(VERSION)
-+GO_LDFLAGS := -X $(PROJECT)/pkg/version.Version=$(VERSION) -extldflags "-static-pie"
++GO_LDFLAGS := -X $(PROJECT)/pkg/version.Version=$(VERSION) -linkmode external -extldflags "-static-pie"
 +GO_TAGS := -tags netgo,osusergo
  
  BUILD_PATH := $(shell pwd)/build
