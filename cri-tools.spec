@@ -4,7 +4,7 @@
 #
 Name     : cri-tools
 Version  : 1.26.0
-Release  : 55
+Release  : 56
 URL      : https://github.com/kubernetes-sigs/cri-tools/archive/v1.26.0/cri-tools-1.26.0.tar.gz
 Source0  : https://github.com/kubernetes-sigs/cri-tools/archive/v1.26.0/cri-tools-1.26.0.tar.gz
 Summary  : No detailed summary available
@@ -13,6 +13,9 @@ License  : Apache-2.0 BSD-2-Clause BSD-3-Clause CC-BY-SA-4.0 ISC MIT
 Requires: cri-tools-bin = %{version}-%{release}
 Requires: cri-tools-license = %{version}-%{release}
 BuildRequires : buildreq-golang
+# Suppress stripping binaries
+%define __strip /bin/true
+%define debug_package %{nil}
 
 %description
 # cri-tools
@@ -40,21 +43,24 @@ license components for the cri-tools package.
 cd %{_builddir}/cri-tools-1.26.0
 
 %build
+## build_prepend content
+unset CLEAR_DEBUG_TERSE
+## build_prepend end
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1671496867
+export SOURCE_DATE_EPOCH=1677176510
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$FFLAGS -fno-lto "
-export FFLAGS="$FFLAGS -fno-lto "
-export CXXFLAGS="$CXXFLAGS -fno-lto "
+export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
 make  %{?_smp_mflags}  V=1 VERSION=%{version}
 
 
 %install
-export SOURCE_DATE_EPOCH=1671496867
+export SOURCE_DATE_EPOCH=1677176510
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-tools
 cp %{_builddir}/cri-tools-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/92170cdc034b2ff819323ff670d3b7266c8bffcd || :
@@ -153,6 +159,7 @@ cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/component-base/LICENSE %{buil
 cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/cri-api/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/92170cdc034b2ff819323ff670d3b7266c8bffcd || :
 cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/klog/v2/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/172ca3bbafe312a1cf09cfff26953db2f425c28e || :
 cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/kube-openapi/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
+cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/kube-openapi/pkg/internal/third_party/go-json-experiment/json/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/6c1c86ffff267e1d7d8f03dca1c41492e62f265b || :
 cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/kube-openapi/pkg/validation/spec/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/kube-openapi/pkg/validation/spec/license.go %{buildroot}/usr/share/package-licenses/cri-tools/555e9ac61d94352b3c2935e77b51fc6dc31d4822 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/kubectl/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/92170cdc034b2ff819323ff670d3b7266c8bffcd || :
@@ -195,6 +202,7 @@ cp %{_builddir}/cri-tools-%{version}/vendor/sigs.k8s.io/yaml/LICENSE %{buildroot
 /usr/share/package-licenses/cri-tools/555e9ac61d94352b3c2935e77b51fc6dc31d4822
 /usr/share/package-licenses/cri-tools/580c0a1f1386fe13bce395d23bdaf3b14ae2e20b
 /usr/share/package-licenses/cri-tools/5a7d7df655ba40478fae80a6abafc6afc36f9b6a
+/usr/share/package-licenses/cri-tools/6c1c86ffff267e1d7d8f03dca1c41492e62f265b
 /usr/share/package-licenses/cri-tools/7080652cc78cd9855d39e324529a3b5f3745dcd6
 /usr/share/package-licenses/cri-tools/74850a25a5319bdddc0d998eb8926c18bada282b
 /usr/share/package-licenses/cri-tools/7be82c1a81e7197640a88df91dc82d64b77c7acd
