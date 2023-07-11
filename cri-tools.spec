@@ -4,10 +4,10 @@
 # Using build pattern: make
 #
 Name     : cri-tools
-Version  : 1.27.0
-Release  : 62
-URL      : https://github.com/kubernetes-sigs/cri-tools/archive/v1.27.0/cri-tools-1.27.0.tar.gz
-Source0  : https://github.com/kubernetes-sigs/cri-tools/archive/v1.27.0/cri-tools-1.27.0.tar.gz
+Version  : 1.27.1
+Release  : 63
+URL      : https://github.com/kubernetes-sigs/cri-tools/archive/v1.27.1/cri-tools-1.27.1.tar.gz
+Source0  : https://github.com/kubernetes-sigs/cri-tools/archive/v1.27.1/cri-tools-1.27.1.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause CC-BY-SA-4.0 ISC MIT
@@ -40,8 +40,11 @@ license components for the cri-tools package.
 
 
 %prep
-%setup -q -n cri-tools-1.27.0
-cd %{_builddir}/cri-tools-1.27.0
+%setup -q -n cri-tools-1.27.1
+cd %{_builddir}/cri-tools-1.27.1
+pushd ..
+cp -a cri-tools-1.27.1 buildavx2
+popd
 
 %build
 ## build_prepend content
@@ -51,17 +54,28 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1681774589
+export SOURCE_DATE_EPOCH=1689087030
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 make  %{?_smp_mflags}  V=1 VERSION=%{version}
 
+pushd ../buildavx2
+## build_prepend content
+unset CLEAR_DEBUG_TERSE
+## build_prepend end
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
+make  %{?_smp_mflags}  V=1 VERSION=%{version}
+popd
 
 %install
-export SOURCE_DATE_EPOCH=1681774589
+export SOURCE_DATE_EPOCH=1689087030
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-tools
 cp %{_builddir}/cri-tools-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/92170cdc034b2ff819323ff670d3b7266c8bffcd || :
@@ -170,13 +184,19 @@ cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/utils/internal/third_party/fo
 cp %{_builddir}/cri-tools-%{version}/vendor/sigs.k8s.io/json/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/1fec85ad53bebf4bffc9cf02a7dfcfa56ad6b94d || :
 cp %{_builddir}/cri-tools-%{version}/vendor/sigs.k8s.io/structured-merge-diff/v4/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/92170cdc034b2ff819323ff670d3b7266c8bffcd || :
 cp %{_builddir}/cri-tools-%{version}/vendor/sigs.k8s.io/yaml/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/271aeaf56ee621c5accfc2a9db0b10717e038eaf || :
+pushd ../buildavx2/
+%make_install_v3 BINDIR=/usr/bin
+popd
 %make_install BINDIR=/usr/bin
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
 
 %files bin
 %defattr(-,root,root,-)
+/V3/usr/bin/crictl
+/V3/usr/bin/critest
 /usr/bin/crictl
 /usr/bin/critest
 
