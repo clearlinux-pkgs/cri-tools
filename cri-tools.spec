@@ -5,7 +5,7 @@
 #
 Name     : cri-tools
 Version  : 1.27.1
-Release  : 63
+Release  : 64
 URL      : https://github.com/kubernetes-sigs/cri-tools/archive/v1.27.1/cri-tools-1.27.1.tar.gz
 Source0  : https://github.com/kubernetes-sigs/cri-tools/archive/v1.27.1/cri-tools-1.27.1.tar.gz
 Summary  : No detailed summary available
