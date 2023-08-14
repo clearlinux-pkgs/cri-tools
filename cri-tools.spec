@@ -4,10 +4,10 @@
 # Using build pattern: make
 #
 Name     : cri-tools
-Version  : 1.27.1
-Release  : 65
-URL      : https://github.com/kubernetes-sigs/cri-tools/archive/v1.27.1/cri-tools-1.27.1.tar.gz
-Source0  : https://github.com/kubernetes-sigs/cri-tools/archive/v1.27.1/cri-tools-1.27.1.tar.gz
+Version  : 1.28.0
+Release  : 66
+URL      : https://github.com/kubernetes-sigs/cri-tools/archive/v1.28.0/cri-tools-1.28.0.tar.gz
+Source0  : https://github.com/kubernetes-sigs/cri-tools/archive/v1.28.0/cri-tools-1.28.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause CC-BY-SA-4.0 ISC MIT
@@ -40,10 +40,10 @@ license components for the cri-tools package.
 
 
 %prep
-%setup -q -n cri-tools-1.27.1
-cd %{_builddir}/cri-tools-1.27.1
+%setup -q -n cri-tools-1.28.0
+cd %{_builddir}/cri-tools-1.28.0
 pushd ..
-cp -a cri-tools-1.27.1 buildavx2
+cp -a cri-tools-1.28.0 buildavx2
 popd
 
 %build
@@ -54,7 +54,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1689087030
+export SOURCE_DATE_EPOCH=1692023971
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
@@ -75,7 +75,7 @@ make  %{?_smp_mflags}  V=1 VERSION=%{version}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1689087030
+export SOURCE_DATE_EPOCH=1692023971
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-tools
 cp %{_builddir}/cri-tools-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/92170cdc034b2ff819323ff670d3b7266c8bffcd || :
@@ -102,9 +102,8 @@ cp %{_builddir}/cri-tools-%{version}/vendor/github.com/go-openapi/jsonreference/
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/go-openapi/swag/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/go-task/slim-sprig/LICENSE.txt %{buildroot}/usr/share/package-licenses/cri-tools/535e3badf5b532d842627b504976fbb93bc2d8b8 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/gogo/protobuf/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/06b27345acae9303e13dde9974d2b2e318b05989 || :
-cp %{_builddir}/cri-tools-%{version}/vendor/github.com/golang/glog/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/172ca3bbafe312a1cf09cfff26953db2f425c28e || :
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/golang/protobuf/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/aa9b240f558caed367795f667629ccbca28f20b2 || :
-cp %{_builddir}/cri-tools-%{version}/vendor/github.com/google/gnostic/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/5a7d7df655ba40478fae80a6abafc6afc36f9b6a || :
+cp %{_builddir}/cri-tools-%{version}/vendor/github.com/google/gnostic-models/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/5a7d7df655ba40478fae80a6abafc6afc36f9b6a || :
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/google/go-cmp/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/7080652cc78cd9855d39e324529a3b5f3745dcd6 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/google/gofuzz/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/google/pprof/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
@@ -126,8 +125,6 @@ cp %{_builddir}/cri-tools-%{version}/vendor/github.com/opencontainers/go-digest/
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/opencontainers/go-digest/LICENSE.docs %{buildroot}/usr/share/package-licenses/cri-tools/979fd7d5c67073b265d96f584aac3de1c419b8e2 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/opencontainers/runc/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/8ff574408142cd6bbb2a1b83302de24cb7b35e8b || :
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/opencontainers/selinux/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/92170cdc034b2ff819323ff670d3b7266c8bffcd || :
-cp %{_builddir}/cri-tools-%{version}/vendor/github.com/pborman/uuid/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/08021ae73f58f423dd6e7b525e81cf2520f7619e || :
-cp %{_builddir}/cri-tools-%{version}/vendor/github.com/pkg/errors/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/9c1bedc0d42f24c24a1bd266f3ce101a4b0579fc || :
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/prometheus/client_golang/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/7df059597099bb7dcf25d2a9aedfaf4465f72d8d || :
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/prometheus/client_golang/NOTICE %{buildroot}/usr/share/package-licenses/cri-tools/fd6460234f122a19f21affb6d6885269340b9176 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/github.com/prometheus/client_model/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/7df059597099bb7dcf25d2a9aedfaf4465f72d8d || :
@@ -148,6 +145,7 @@ cp %{_builddir}/cri-tools-%{version}/vendor/go.opentelemetry.io/otel/metric/LICE
 cp %{_builddir}/cri-tools-%{version}/vendor/go.opentelemetry.io/otel/sdk/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/7df059597099bb7dcf25d2a9aedfaf4465f72d8d || :
 cp %{_builddir}/cri-tools-%{version}/vendor/go.opentelemetry.io/otel/trace/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/7df059597099bb7dcf25d2a9aedfaf4465f72d8d || :
 cp %{_builddir}/cri-tools-%{version}/vendor/go.opentelemetry.io/proto/otlp/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/7df059597099bb7dcf25d2a9aedfaf4465f72d8d || :
+cp %{_builddir}/cri-tools-%{version}/vendor/golang.org/x/mod/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/d6a5f1ecaedd723c325a2063375b3517e808a2b5 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/golang.org/x/net/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/d6a5f1ecaedd723c325a2063375b3517e808a2b5 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/golang.org/x/oauth2/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/d6a5f1ecaedd723c325a2063375b3517e808a2b5 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/golang.org/x/sys/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/d6a5f1ecaedd723c325a2063375b3517e808a2b5 || :
@@ -157,6 +155,8 @@ cp %{_builddir}/cri-tools-%{version}/vendor/golang.org/x/time/LICENSE %{buildroo
 cp %{_builddir}/cri-tools-%{version}/vendor/golang.org/x/tools/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/d6a5f1ecaedd723c325a2063375b3517e808a2b5 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/google.golang.org/appengine/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/google.golang.org/genproto/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
+cp %{_builddir}/cri-tools-%{version}/vendor/google.golang.org/genproto/googleapis/api/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
+cp %{_builddir}/cri-tools-%{version}/vendor/google.golang.org/genproto/googleapis/rpc/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/google.golang.org/grpc/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/google.golang.org/protobuf/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/74850a25a5319bdddc0d998eb8926c18bada282b || :
 cp %{_builddir}/cri-tools-%{version}/vendor/gopkg.in/inf.v0/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/580c0a1f1386fe13bce395d23bdaf3b14ae2e20b || :
@@ -166,6 +166,7 @@ cp %{_builddir}/cri-tools-%{version}/vendor/gopkg.in/yaml.v2/NOTICE %{buildroot}
 cp %{_builddir}/cri-tools-%{version}/vendor/gopkg.in/yaml.v3/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/b74b3b31bc15ad5e94fc1947d682aa3d84132fce || :
 cp %{_builddir}/cri-tools-%{version}/vendor/gopkg.in/yaml.v3/NOTICE %{buildroot}/usr/share/package-licenses/cri-tools/9522d95b2b9b284285cc3fb6ecc445aa3ee5e785 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/api/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
+cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/apiextensions-apiserver/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/apimachinery/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/apimachinery/third_party/forked/golang/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/d6a5f1ecaedd723c325a2063375b3517e808a2b5 || :
 cp %{_builddir}/cri-tools-%{version}/vendor/k8s.io/apiserver/LICENSE %{buildroot}/usr/share/package-licenses/cri-tools/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
@@ -238,7 +239,6 @@ popd
 /usr/share/package-licenses/cri-tools/93ac97c9679b68518f1fd7de627ce2f77f44082d
 /usr/share/package-licenses/cri-tools/9522d95b2b9b284285cc3fb6ecc445aa3ee5e785
 /usr/share/package-licenses/cri-tools/979fd7d5c67073b265d96f584aac3de1c419b8e2
-/usr/share/package-licenses/cri-tools/9c1bedc0d42f24c24a1bd266f3ce101a4b0579fc
 /usr/share/package-licenses/cri-tools/9f1b6690bcfc732123ae209c90c62f2ba80dfcb0
 /usr/share/package-licenses/cri-tools/a1c7852c717fed2c9a0284ed112ea66013230da6
 /usr/share/package-licenses/cri-tools/a8993f4a51771a0333dbbc5b1c4395a2ccaa4d9f
