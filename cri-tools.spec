@@ -7,7 +7,7 @@
 #
 Name     : cri-tools
 Version  : 1.29.0
-Release  : 68
+Release  : 69
 URL      : https://github.com/kubernetes-sigs/cri-tools/archive/v1.29.0/cri-tools-1.29.0.tar.gz
 Source0  : https://github.com/kubernetes-sigs/cri-tools/archive/v1.29.0/cri-tools-1.29.0.tar.gz
 Summary  : No detailed summary available
